@@ -8,13 +8,18 @@ import NoResults from './NoResults'
 const PhotoList = (props) => {
     //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
     const results = props.photos
-    console.log(props)
+
     let photos
     if(results.length > 0){
       photos = results.map(foto =>  (
                  <Photo 
+                    // farm0 was occasionally being included in the results, but DNS said it didn't exist. :-/ Setting this to farm66 seems to fix it
+                    // working again 6/4
+                    // url={`https://farm66.staticflickr.com/${foto.server}/${foto.id}_${foto.secret}.jpg`} 
                     url={`https://farm${foto.farm}.staticflickr.com/${foto.server}/${foto.id}_${foto.secret}.jpg`} 
+                    title={foto.title}
                     key={foto.id} 
+
                   /> 
             )) 
       
@@ -24,20 +29,9 @@ const PhotoList = (props) => {
     }
     return(
         <div className="photo-container">
-        <h2>Results</h2>
+        {/* <h2>Results</h2> */}
         <ul>
-          {/* <li>
-            <img src="https://farm5.staticflickr.com/4334/37032996241_4c16a9b530.jpg" alt="" />
-          </li>
-          <li>
-            <img src="https://farm5.staticflickr.com/4342/36338751244_316b6ee54b.jpg" alt="" />
-          </li>
-          <li>
-            <img src="https://farm5.staticflickr.com/4343/37175099045_0d3a249629.jpg" alt="" />
-          </li>
-          <li>
-            <img src="https://farm5.staticflickr.com/4425/36337012384_ba3365621e.jpg" alt="" />
-          </li> */}
+
           {photos}
 
         </ul>
