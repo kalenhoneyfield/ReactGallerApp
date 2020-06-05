@@ -91,7 +91,7 @@ class App extends Component{
               />
               <Route 
                 path="/search/:tag"
-                render={ () => <SearchByRoute photos={this.state.photos} performSearch={this.performSearch} /> }
+                render={ () => <SearchByRoute photos={this.state.photos} performSearch={this.performSearch} history={this.props.history}/> }
               />
               {/* <Route 
                 render={ () => <PhotoContainer photos={this.state.photos} noRoute={this.performSearch('404') }/> }

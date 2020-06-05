@@ -5,7 +5,9 @@ import PhotoContainer from './PhotoContainer'
 
 const SearchByRoute = (props) => {
   let tag = useParams().tag
-  props.performSearch(tag, 1, 12)
+//   props.performSearch(tag, 1, 12)
+props.history.push(`/search/${tag}`)
+console.log(props)
   return (
     <div className="main-content">
       <h2>Query: {tag} </h2>
