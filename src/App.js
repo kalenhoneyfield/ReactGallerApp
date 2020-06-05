@@ -41,6 +41,7 @@ class App extends Component{
         photos: response.data.photos.photo,
         searchWord: query
       })
+      console.log('A Request to the API was just made')
     })
     .catch(error => {
       console.log('Error fetching and parsing data', error);
@@ -59,6 +60,7 @@ class App extends Component{
       dynTags: list
     })
   }
+
 /*
   Render a default route, preferably a single picture to start with
   Set up 3+ routes for some simple easy click to display searches
@@ -74,7 +76,7 @@ class App extends Component{
       <BrowserRouter>
         <div className="container">
 
-          <MainPage performSearch={this.performSearch} dynTags={this.state.dynTags} searchWord={this.state.searchWord}/>
+          <MainPage performSearch={this.performSearch} dynTags={this.state.dynTags} searchWord={this.state.searchWord} history={this.props.history}/>
     
             <Switch>
               <Route 
@@ -90,8 +92,12 @@ class App extends Component{
                 } }
               />
               <Route 
+                path="/tags/:tag"
+                render={ () => <SearchByRoute photos={this.state.photos} performSearch={this.performSearch} /> }
+              />
+              <Route 
                 path="/search/:tag"
-                render={ () => <SearchByRoute photos={this.state.photos} performSearch={this.performSearch} history={this.props.history}/> }
+                render={ () => <PhotoContainer photos={this.state.photos}/> }
               />
               {/* <Route 
                 render={ () => <PhotoContainer photos={this.state.photos} noRoute={this.performSearch('404') }/> }

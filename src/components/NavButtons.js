@@ -13,7 +13,16 @@ const NavButtons = (props) => {
         randomKey += possible.charAt(Math.floor(Math.random() * possible.length))
       }
       //end sledge hammer
-      return <li key={randomKey + idx}> <NavLink to={`/search/${dynLink}`} key={randomKey} > {dynLink} </NavLink> </li>
+      return (
+          <li key={randomKey + idx} onClick={() => { 
+                                            props.history.push(`/tags/${dynLink}`) 
+                                            props.performSearch(dynLink, 1, 12)
+                                            }  }> 
+            <NavLink to={`/search/${dynLink}`} key={randomKey} > 
+              {dynLink}  
+            </NavLink> 
+          </li>
+      )
       //and now React has stopped yelling about unique keys. 
     }
       
