@@ -53,6 +53,7 @@ class App extends Component{
     // for(let i = 0; i < 3; i++){
     //   list.push( nouns[ Math.floor(Math.random() * nouns.length) ] )
     // }
+    // why 11k api calls? why the flickering buttons... 
 
     this.setState({
       dynTags: list
@@ -72,10 +73,7 @@ class App extends Component{
     return (
       <BrowserRouter>
         <div className="container">
-    
-          {/* <SearchForm onSearch={this.performSearch}/>
-    
-          <NavButtons /> */}
+
           <MainPage performSearch={this.performSearch} dynTags={this.state.dynTags} searchWord={this.state.searchWord}/>
     
             <Switch>
@@ -95,20 +93,6 @@ class App extends Component{
                 path="/search/:tag"
                 render={ () => <SearchByRoute photos={this.state.photos} performSearch={this.performSearch} /> }
               />
-              {/* <Route 
-                path="/about"
-                render={ () => <About title='About' /> }
-              />
-              <Route 
-                exact
-                path="/teachers"
-                component={Teachers}
-              />
-
-              <Route 
-                path="/courses"
-                component={Courses}
-              /> */}
               {/* <Route 
                 render={ () => <PhotoContainer photos={this.state.photos} noRoute={this.performSearch('404') }/> }
               /> */}
