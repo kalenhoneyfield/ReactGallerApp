@@ -5,7 +5,7 @@ import Photo from './Photo'
 import NoResults from './NoResults'
 
 
-const PhotoList = (props) => {
+const PhotoContainer = (props) => {
     //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
     const results = props.photos
 
@@ -39,4 +39,4 @@ const PhotoList = (props) => {
     )
 }
 
-export default PhotoList
+export default PhotoContainer

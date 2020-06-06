@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-
 import PhotoContainer from './PhotoContainer'
 
 class SearchByRoute extends Component {
@@ -8,21 +7,16 @@ class SearchByRoute extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tag: ''
+      tag: '',
+      whyIsgetParamsNotUpdatingState: this.props.match.params.tag
       }
     } 
 
   componentDidMount() {
     this.getParams()
     this.performSearch()
+    console.log(this.state.whyIsgetParamsNotUpdatingState)
   }
-
-  static getDerivedStateFromProps(nextProps, prevState){
-    if(nextProps.match.params.tag!==prevState.tag){
-      return { tag: nextProps.match.params.tag};
-   }
-   else return null;
- }
 
   getParams = () => {
     this.setState(prevState => {
@@ -35,11 +29,11 @@ class SearchByRoute extends Component {
   }
 
   render(){
-    
+
     return (
       <div className="main-content">
-        <h2>Query: {this.state.tag} </h2>
-  
+        <h2>Tag: {this.props.searchWord ? this.props.searchWord : this.state.tag ? this.state.tag : 'pants'} </h2>
+
         <PhotoContainer photos={this.props.photos}  />
   
       </div>

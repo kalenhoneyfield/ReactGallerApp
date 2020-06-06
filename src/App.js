@@ -7,6 +7,7 @@ import PhotoContainer from './components/PhotoContainer'
 import MainPage from './components/MainPage'
 import SearchByRoute from './components/SearchByRoute'
 import FourOhFour from './components/FourOhFour'
+import FrontPageContainer from './components/FrontPageContainer'
 
 //import small list of nouns
 import nouns from './components/wordlist/wordList'
@@ -26,17 +27,16 @@ class App extends Component{
       photos: [],
       searchWord: '',
       dynTags: [],
-      tags: ''
+      tags: '',
+      date: ''
     }
   } 
 
   componentDidMount() {
-    this.generateDynTags()
-    this.performSearch()
-    
+    this.generateDynTags() 
   }
 
-  performSearch = (query = `${this.state.dynTags[1]}`, pageNum = 1, perPage = 1) => {
+  performSearch = (query = `kittens`, pageNum = 1, perPage = 1) => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${APIKEY}&tags=${query}&per_page=${perPage}&page=${pageNum}&format=json&nojsoncallback=1`)
     .then(response => {
       this.setState({
@@ -59,6 +59,14 @@ class App extends Component{
     })
   }
 
+  //handle the pushing of the history
+  handleHistoryPush = (path) => {
+    this.props.history.push({
+      pathname: path,
+      state: { tag: path }
+      })
+  }
+
 /*
   Render a default route, preferably a single picture to start with
   Set up 3+ routes for some simple easy click to display searches
@@ -74,28 +82,29 @@ class App extends Component{
       <BrowserRouter>
         <div className="container">
 
-          <MainPage performSearch={this.performSearch} dynTags={this.state.dynTags} searchWord={this.state.searchWord} history={this.props.history}/>
+          <MainPage 
+            performSearch={this.performSearch} 
+            dynTags={this.state.dynTags} 
+            searchWord={this.state.searchWord} 
+            history={this.props.history}
+            handleHistoryPush={this.handleHistoryPush}
+            />
     
             <Switch>
               <Route 
                 exact
                 path="/"
-                render={ () => <PhotoContainer photos={this.state.photos}/> }
-              />
-              <Route 
-                path="/about"
-                render={ () => {
-                  this.performSearch(`Not Found`, 20, 2)
-                  return <PhotoContainer photos={this.state.photos}/>
-                } }
+                render={ () => <FrontPageContainer /> }
               />
               <Route 
                 path="/tags/:tag"
-                render={ props => <SearchByRoute {...props} photos={this.state.photos} performSearch={this.performSearch}/> }
+                render={ props => <SearchByRoute {...props} photos={this.state.photos} performSearch={this.performSearch} searchWord={this.state.searchWord}/> }
               />
               <Route 
                 path="/search/:tag"
-                render={ props => <SearchByRoute {...props} photos={this.state.photos} performSearch={this.performSearch}/> }
+                render={ props => {
+                  return <SearchByRoute {...props} photos={this.state.photos} performSearch={this.performSearch} searchWord={this.state.searchWord} />
+                } }
               />
               {/* <Route 
                 path="/search/:tag"

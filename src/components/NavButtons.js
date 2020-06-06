@@ -15,7 +15,7 @@ const NavButtons = (props) => {
       //end sledge hammer
       return (
           <li key={randomKey + idx} onClick={() => { 
-                                            props.history.push(`/tags/${dynLink}`) 
+                                            props.handleHistoryPush(`/tags/${dynLink}`) 
                                             props.performSearch(dynLink, 1, 24)
                                             }  }> 
             <NavLink to={`/tags/${dynLink}`} key={randomKey} > 
