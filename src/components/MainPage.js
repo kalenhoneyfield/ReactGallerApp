@@ -4,12 +4,12 @@ import React from 'react'
 import SearchForm from './SearchForm'
 import NavButtons from './NavButtons'
 
-const MainPage = ({ performSearch, dynTags, history }) => {
+const MainPage = (props) => {
     return(
         <header>
-            <SearchForm onSearch={ performSearch } history={history}/>
+            <SearchForm onSearch={ props.performSearch } history={ props.history }/>
         
-            <NavButtons dynTags={ dynTags } history={history} performSearch={ performSearch }/>
+            <NavButtons dynTags={ props.dynTags } history={ props.history } performSearch={ props.performSearch }/>
         </header>
     )
 }

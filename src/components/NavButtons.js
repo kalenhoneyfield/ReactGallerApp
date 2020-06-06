@@ -16,9 +16,9 @@ const NavButtons = (props) => {
       return (
           <li key={randomKey + idx} onClick={() => { 
                                             props.history.push(`/tags/${dynLink}`) 
-                                            props.performSearch(dynLink, 1, 12)
+                                            props.performSearch(dynLink, 1, 24)
                                             }  }> 
-            <NavLink to={`/search/${dynLink}`} key={randomKey} > 
+            <NavLink to={`/tags/${dynLink}`} key={randomKey} > 
               {dynLink}  
             </NavLink> 
           </li>

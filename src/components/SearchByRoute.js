@@ -1,19 +1,51 @@
-import React from 'react';
-import { useParams } from 'react-router-dom'
+import React, { Component } from 'react'
+
 
 import PhotoContainer from './PhotoContainer'
 
-const SearchByRoute = (props) => {
-  let tag = useParams().tag
+class SearchByRoute extends Component {
 
-  return (
-    <div className="main-content">
-      <h2>Query: {tag} </h2>
+  constructor(props) {
+    super(props);
+    this.state = {
+      tag: ''
+      }
+    } 
 
-      <PhotoContainer photos={props.photos}  />
+  componentDidMount() {
+    this.getParams()
+    this.performSearch()
+  }
 
-    </div>
-  );
+  static getDerivedStateFromProps(nextProps, prevState){
+    if(nextProps.match.params.tag!==prevState.tag){
+      return { tag: nextProps.match.params.tag};
+   }
+   else return null;
+ }
+
+  getParams = () => {
+    this.setState(prevState => {
+      return { tag: this.props.match.params.tag }
+    })
+  }
+
+  performSearch = () => {
+    this.props.performSearch(this.props.match.params.tag, 1, 24)
+  }
+
+  render(){
+    
+    return (
+      <div className="main-content">
+        <h2>Query: {this.state.tag} </h2>
+  
+        <PhotoContainer photos={this.props.photos}  />
+  
+      </div>
+    );
+  }
+
 }
 
 export default SearchByRoute;

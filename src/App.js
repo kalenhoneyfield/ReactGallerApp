@@ -6,6 +6,7 @@ import axios from 'axios'
 import PhotoContainer from './components/PhotoContainer'
 import MainPage from './components/MainPage'
 import SearchByRoute from './components/SearchByRoute'
+import FourOhFour from './components/FourOhFour'
 
 //import small list of nouns
 import nouns from './components/wordlist/wordList'
@@ -24,14 +25,15 @@ class App extends Component{
     this.state = {
       photos: [],
       searchWord: '',
-      dynTags: []
+      dynTags: [],
+      tags: ''
     }
   } 
 
   componentDidMount() {
-
-    this.performSearch()
     this.generateDynTags()
+    this.performSearch()
+    
   }
 
   performSearch = (query = `${this.state.dynTags[1]}`, pageNum = 1, perPage = 1) => {
@@ -51,10 +53,6 @@ class App extends Component{
   //using a noun list, lets get three random words and use them for our tags
   generateDynTags = () => {
     const list = [ nouns[ Math.floor(Math.random() * nouns.length)], nouns[ Math.floor(Math.random() * nouns.length)], nouns[ Math.floor(Math.random() * nouns.length)] ]
-    // for(let i = 0; i < 3; i++){
-    //   list.push( nouns[ Math.floor(Math.random() * nouns.length) ] )
-    // }
-    // why 11k api calls? why the flickering buttons... 
 
     this.setState({
       dynTags: list
@@ -93,15 +91,19 @@ class App extends Component{
               />
               <Route 
                 path="/tags/:tag"
-                render={ () => <SearchByRoute photos={this.state.photos} performSearch={this.performSearch} /> }
+                render={ props => <SearchByRoute {...props} photos={this.state.photos} performSearch={this.performSearch}/> }
               />
               <Route 
                 path="/search/:tag"
-                render={ () => <PhotoContainer photos={this.state.photos}/> }
+                render={ props => <SearchByRoute {...props} photos={this.state.photos} performSearch={this.performSearch}/> }
               />
               {/* <Route 
-                render={ () => <PhotoContainer photos={this.state.photos} noRoute={this.performSearch('404') }/> }
+                path="/search/:tag"
+                render={ () => <PhotoContainer photos={this.state.photos}/> }
               /> */}
+              <Route 
+                render={ () => <FourOhFour /> }
+              />
             </Switch>
     
         </div>
